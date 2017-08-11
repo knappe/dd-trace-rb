@@ -51,7 +51,7 @@ namespace :test do
     t.test_files = FileList['test/contrib/rails/**/*disable_env*_test.rb']
   end
 
-  [:elasticsearch, :http, :redis, :sinatra, :sidekiq, :rack, :grape].each do |contrib|
+  [:elasticsearch, :http, :redis, :sinatra, :sidekiq, :rack, :grape, :mongodb].each do |contrib|
     Rake::TestTask.new(contrib) do |t|
       t.libs << %w[test lib]
       t.test_files = FileList["test/contrib/#{contrib}/*_test.rb"]
@@ -140,12 +140,14 @@ task :ci do
     sh 'rvm $MRI_VERSIONS --verbose do appraisal contrib rake test:sidekiq'
     sh 'rvm $MRI_VERSIONS --verbose do appraisal contrib rake test:rack'
     sh 'rvm $MRI_VERSIONS --verbose do appraisal contrib rake test:grape'
+    sh 'rvm $MRI_VERSIONS --verbose do appraisal contrib rake test:mongodb'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:monkey'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:elasticsearch'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:http'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:redis'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:sinatra'
     sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:rack'
+    sh 'rvm $MRI_OLD_VERSIONS --verbose do appraisal contrib-old rake test:mongodb'
     sh 'rvm $SIDEKIQ_OLD_VERSIONS --verbose do appraisal contrib-old rake test:sidekiq'
   when 2
     sh 'rvm $RAILS3_VERSIONS --verbose do appraisal rails30-postgres rake test:rails'
