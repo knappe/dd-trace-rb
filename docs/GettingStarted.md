@@ -152,6 +152,7 @@ retrieved at the Rack level.
 To start using the middleware in your generic Rack application, add it to your ``config.ru``:
 
     # config.ru example
+    require 'ddtrace/contrib/rack/middlewares'
     use Datadog::Contrib::Rack::TraceMiddleware
 
     app = proc do |env|
@@ -165,6 +166,7 @@ To start using the middleware in your generic Rack application, add it to your `
 To modify the default middleware configuration, you can use middleware options as follows:
 
     # config.ru example
+    require 'ddtrace/contrib/rack/middlewares'
     use Datadog::Contrib::Rack::TraceMiddleware, default_service: 'rack-stack'
 
     app = proc do |env|
